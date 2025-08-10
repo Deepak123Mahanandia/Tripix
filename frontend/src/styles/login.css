@@ -1,0 +1,127 @@
+/* Import a modern font from Google Fonts (add to your main index.css or here) */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+/* --- Main Page Styling --- */
+.login__page {
+  /* You can replace this with any high-quality background image */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* --- Login Card with Glassmorphism Effect --- */
+.login__card {
+  max-width: 450px;
+  width: 100%;
+  margin: auto;
+  padding: 2.5rem 2rem;
+  border-radius: 20px;
+  text-align: center;
+
+  /* Glassmorphism Effect */
+  background: rgba(17, 25, 40, 0.75);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.125);
+}
+
+/* --- User Avatar --- */
+.login__avatar {
+  margin-bottom: 1rem;
+}
+
+.login__avatar img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px solid #6bd0c1; /* Your requested color */
+  object-fit: cover;
+  box-shadow: 0 0 20px rgba(107, 208, 193, 0.4);
+}
+
+/* --- Typography --- */
+.login__card h2 {
+  color: #fff;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.login__card .login__subtitle {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
+}
+
+/* --- Form Input Fields --- */
+.login__card .form__group {
+  margin-bottom: 1.5rem;
+}
+
+.login__card input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: #fff;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.login__card input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.login__card input:focus {
+  outline: none;
+  border-color: #6bd0c1; /* Your requested color */
+  box-shadow: 0 0 15px rgba(107, 208, 193, 0.3);
+}
+
+/* --- Login Button --- */
+.auth__btn {
+  width: 100%;
+  background: #6bd0c1 !important; /* Your requested color */
+  color: #111928 !important; /* Dark text for contrast */
+  border: none !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  padding: 0.8rem 1rem !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 4px 15px rgba(107, 208, 193, 0.2);
+}
+
+.auth__btn:hover {
+  background: #5ac4b5 !important; /* Slightly darker shade on hover */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(107, 208, 193, 0.4);
+}
+
+/* --- "Create Account" Link --- */
+.login__register-link {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.login__register-link a {
+  color: #6bd0c1; /* Your requested color */
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.login__register-link a:hover {
+  text-decoration: underline;
+  color: #fff;
+}

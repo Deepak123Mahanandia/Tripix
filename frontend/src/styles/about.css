@@ -1,0 +1,167 @@
+/* ========== HERO SECTION ========== */
+.about__hero-section {
+  position: relative;
+  min-height: 60vh;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about__hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
+}
+
+.about__hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.about__hero-content h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.about__hero-content p {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 1rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ========== SHARED SECTION STYLES ========== */
+.section__title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #1a2b48; /* Dark blue heading */
+}
+
+.section-subtitle {
+  color: #6bd0c1; /* YOUR BRAND COLOR */
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-family: 'Poppins', sans-serif;
+  display: inline-block;
+  padding: 5px 15px;
+  background: rgba(107, 208, 193, 0.1);
+  border-radius: 50px;
+}
+
+/* ========== OUR STORY SECTION ========== */
+.our-story__content p {
+  color: #555;
+  line-height: 1.8;
+}
+
+.our-story__img {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* ========== OUR VALUES SECTION ========== */
+.values__section {
+  background: #fafcff;
+  padding: 5rem 0;
+}
+
+.value__card {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.value__card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.value__icon i {
+  font-size: 3rem;
+  color: #6bd0c1; /* YOUR BRAND COLOR */
+  margin-bottom: 1rem;
+  display: inline-block;
+  background: rgba(107, 208, 193, 0.1);
+  padding: 1rem;
+  border-radius: 50%;
+}
+
+.value__card h5 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.value__card p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* ========== CALL TO ACTION (CTA) SECTION ========== */
+.cta__section {
+  background: #1a2b48; /* Dark blue background */
+  padding: 5rem 0;
+  color: #fff;
+}
+
+.cta__section h2 {
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+
+.cta__section p {
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 600px;
+  margin: 1rem auto 2rem;
+}
+
+.cta__btn {
+  background: #6bd0c1 !important; /* YOUR BRAND COLOR */
+  color: #1a2b48 !important; /* Dark text for contrast */
+  border: none !important;
+  font-weight: 600 !important;
+  padding: 0.8rem 2.5rem !important;
+  border-radius: 50px !important;
+  transition: all 0.3s ease !important;
+  text-transform: uppercase;
+}
+
+.cta__btn:hover {
+  background: #fff !important;
+  transform: translateY(-3px);
+}
+
+/* ========== RESPONSIVE STYLES ========== */
+@media only screen and (max-width: 992px) {
+  .about__hero-content h1, .section__title, .cta__section h2 {
+    font-size: 2.2rem;
+  }
+  .value__card {
+    margin-bottom: 2rem;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .our-story__content {
+    margin-bottom: 2rem;
+  }
+}
+
+.story{
+  padding-top: 50px;
+}

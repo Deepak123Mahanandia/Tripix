@@ -1,0 +1,118 @@
+.hero_subtitle img{
+    width: 6.3rem;
+    height:6.3rem
+}
+
+.hero_content h1
+{
+    font-size: 3.2rem;
+    font-weight: 600;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    color: var(--heading-color);
+
+}
+
+.hero_content h1 .highlight
+{
+    color: var(--secondary-color);
+}
+
+.hero_content p{
+    font-size: 1.1rem;
+    color: var(--text-color);
+    line-height: 2rem;
+}
+
+.hero_img-box img, .hero_img-box video{
+    width:100%;
+    height: 350px;
+    border-radius: 20px;
+    border: 1px solid var(--secondary-color);
+    object-fit:cover;
+}
+
+.hero_content
+{
+    padding-top: 3.5rem;
+}
+
+.hero_img-box{
+    padding-top:2rem
+}
+
+
+.services_subtitle {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #2c3e50; /* A deep professional gray-blue */
+    font-family: 'Poppins', 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    border-left: 4px solid #6bd0c1;
+    padding-left: 1rem;
+}
+
+
+.services_subtitle{
+    font-size:2.5rem;
+    font-weight: 500;
+}
+
+.service{
+    margin-top: 100px;
+}
+
+.featured_tour-title{
+    font-size:2.3rem ;
+    font-weight: 500;
+}
+
+section:first-of-type {
+  padding-top: 100px; /* adjust based on your header height */
+}
+
+.feature
+{
+    padding-top:60px;
+}
+
+
+.sub
+{
+    width: 200px;
+    font-size: 2.0rem;
+}
+
+.gallery_title
+{
+    font-size: 2.3rem;
+    margin-bottom: 2.5rem;
+    margin-top: 1rem;
+}
+
+.galler
+{
+    padding-top:60px;
+}
+
+.masonry_img
+{
+    transition: .3s;
+}
+
+.masonry_img:hover{
+    transform: scale(1.1);
+}
+
+.testimonial_title
+{
+    font: 2.3rem;
+    margin-top: 1rem;
+}
+
+.feedback
+{
+    padding-top: 60px;
+}

@@ -1,0 +1,182 @@
+import img01 from '../images/tour-img01.jpg';
+import img02 from '../images/tour-img02.jpg';
+import img03 from '../images/tour-img03.jpg';
+import img04 from '../images/tour-img04.jpg';
+import img05 from '../images/tour-img05.jpg';
+import img06 from '../images/tour-img06.jpg';
+import img07 from '../images/kerala.jpg';
+import img08 from '../images/tour-img08.jpg';
+import img09 from '../images/tour-img09.jpg';
+import img10 from '../images/tour-img10.jpg';
+import img11 from '../images/puri.jpg';
+
+
+const tours = [
+  {
+    "id": "01",
+    "title": "Manali Adventure",
+    "city": "Manali",
+    "distance": 540,
+    "price": 8999,
+    "maxGroupSize": 15,
+    "desc": "Explore the beautiful valleys of Manali with scenic views and snow adventures.",
+    "reviews": [
+      { "name": "Amit Singh", "rating": 4.8 },
+      { "name": "Amit Singh", "rating": 3.8 }
+    ],
+    "avgRating": 4.7,
+    "photo": img08,
+    "featured": true
+  },
+  {
+    "id": "02",
+    "title": "Goa Beach Holiday",
+    "city": "Goa",
+    "distance": 580,
+    "price": 7999,
+    "maxGroupSize": 12,
+    "desc": "Enjoy sandy beaches, nightlife, and water sports in Goa.",
+    "reviews": [
+      { "name": "Priya Sharma", "rating": 4.6 }
+    ],
+    "avgRating": 4.6,
+    "photo": img09 ,
+    "featured": true
+  },
+  {
+    "id": "03",
+    "title": "Kerala Backwaters",
+    "city": "Alleppey",
+    "distance": 600,
+    "price": 10999,
+    "maxGroupSize": 10,
+    "desc": "Cruise the tranquil Kerala backwaters in a houseboat.",
+    "reviews": [
+      { "name": "Ravi Menon", "rating": 4.7 }
+    ],
+    "avgRating": 4.7,
+    "photo": img07,
+    "featured": false
+  },
+  {
+    "id": "04",
+    "title": "Westminster Bridge",
+    "city": "London",
+    "distance": 300,
+    "price": 89999,
+    "maxGroupSize": 10,
+    "desc": "Iconic views of Big Ben and the Thames River.",
+    "reviews": [
+      { "name": "John Doe", "rating": 4.6 }
+    ],
+    "avgRating": 4.5,
+    "photo": img01,
+    "featured": true
+  },
+  {
+    "id": "05",
+    "title": "Bali, Indonesia",
+    "city": "Indonesia",
+    "distance": 400,
+    "price": 54999,
+    "maxGroupSize": 8,
+    "desc": "Relax on Bali's tropical beaches and explore temples.",
+    "reviews": [
+      { "name": "John Doe", "rating": 4.6 }
+    ],
+    "avgRating": 4.5,
+    "photo": img02,
+    "featured": true
+  },
+  {
+    "id": "06",
+    "title": "Snowy Mountains",
+    "city": "Thailand",
+    "distance": 500,
+    "price": 59999,
+    "maxGroupSize": 8,
+    "desc": "Experience snow-capped peaks and mountain villages.",
+    "reviews": [
+      { "name": "John Doe", "rating": 4.6 }
+    ],
+    "avgRating": 4.5,
+    "photo": img03,
+    "featured": true
+  },
+  {
+    "id": "07",
+    "title": "Beautiful Sunrise",
+    "city": "Thailand",
+    "distance": 500,
+    "price": 55999,
+    "maxGroupSize": 8,
+    "desc": "Witness breathtaking sunrises over mountain vistas.",
+    "reviews": [
+      { "name": "John Doe", "rating": 4.6 }
+    ],
+    "avgRating": 4.5,
+    "photo": img04,
+    "featured": true
+  },
+  {
+    "id": "08",
+    "title": "Nusa Penida",
+    "city": "Indonesia",
+    "distance": 500,
+    "price": 49999,
+    "maxGroupSize": 8,
+    "desc": "Discover hidden beaches and cliffs on this island gem.",
+    "reviews": [
+      { "name": "John Doe", "rating": 4.6 }
+    ],
+    "avgRating": 4.5,
+    "photo": img05,
+    "featured": false
+  },
+  {
+    "id": "09",
+    "title": "Cherry Blossoms Spring",
+    "city": "Japan",
+    "distance": 500,
+    "price": 74999,
+    "maxGroupSize": 8,
+    "desc": "See cherry blossoms bloom in full glory.",
+    "reviews": [
+      { "name": "John Doe", "rating": 4.6 }
+    ],
+    "avgRating": 4.5,
+    "photo": img06,
+    "featured": false
+  },
+  {
+    "id": "10",
+    "title": "Holmen Lofoten",
+    "city": "France",
+    "distance": 500,
+    "price": 89999,
+    "maxGroupSize": 8,
+    "desc": "Visit the dramatic cliffs and coastal villages of Lofoten.",
+    "reviews": [],
+    "avgRating": 4.5,
+    "photo": img10,
+    "featured": false
+  },
+  {
+    "id": "11",
+    "title": "Spiritual Journey to Puri",
+    "city": "Puri",
+    "distance": 470,
+    "price": 6499,
+    "maxGroupSize": 25,
+    "desc": "Visit the sacred Jagannath Temple, enjoy Puri Beach, and discover the rich heritage of Odisha.",
+    "reviews": [
+      { "name": "Sourav Jena", "rating": 4.8 },
+      { "name": "Ritika Das", "rating": 4.9 }
+    ],
+    "avgRating": 4.85,
+    "photo": img11,
+    "featured": true
+  }
+];
+
+export default tours;

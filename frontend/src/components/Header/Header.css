@@ -1,0 +1,81 @@
+:root {
+  --heading-color: #2c3e50;         /* Professional dark gray-blue */
+  --secondary-color: #6bd0c1;       /* Coral pink (for active links) */
+  --hover-color: #6bd0c1;           /* Professional sky blue */
+}
+
+.header {
+  width: 100%;
+  height: 80px;
+  line-height: 80px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  position: sticky;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+}
+
+.logo img {
+  width: 150px;
+}
+
+.menu {
+  margin-bottom: 0;
+  list-style: none;
+}
+
+.nav_item a {
+  text-decoration: none;
+  color: var(--heading-color);
+  font-weight: 500;
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
+}
+
+.nav_item a:hover {
+  color: var(--hover-color);
+}
+
+.nav_item a.active_link {
+  color: var(--secondary-color);
+}
+
+.mobile_menu {
+  font-size: 1.3rem;
+  color: var(--heading-color);
+  display: none;
+}
+
+.btn {
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+  padding: 8px 20px !important;
+  border: none !important;
+  border-radius: 25px !important;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  text-decoration: none !important;
+  display: inline-block !important;
+}
+
+.primary_btn {
+  background-color:#6bd0c1 !important;
+  color: #fff !important;
+}
+
+.primary_btn:hover {
+  background-color: #6bd0c1 !important;
+  color: #fff !important;
+}
+
+.secondary_btn {
+  background-color: transparent !important;
+  color: var(--heading-color) !important;
+}
+
+.secondary_btn:hover {
+  background-color: #f3f3f3 !important;
+  color: var(--heading-color) !important;
+}
+
+
