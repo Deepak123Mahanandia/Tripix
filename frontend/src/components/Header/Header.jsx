@@ -23,9 +23,9 @@ const Header = () => {
     { path: '/home', display: 'Home' },
     { path: '/about', display: 'About' },
     { path: '/tour', display: 'Tours' },
+    { path: '/trip-planner', display: 'Search and Compare' }, // <-- LINK ADDED HERE
     { path: '/information', display: 'Information' },
     { path: '/support', display: 'Support' },
-
     // Itinerary planner shown only if logged in (below)
   ];
 
@@ -54,7 +54,7 @@ const Header = () => {
                   </li>
                 ))}
 
-                {/*  Itinerary Planner (Only if logged in) */}
+                {/* Itinerary Planner (Only if logged in) */}
                 {isLoggedIn && (
                   <li className="nav_item">
                     <NavLink
