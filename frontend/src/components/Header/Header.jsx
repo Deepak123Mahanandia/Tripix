@@ -1,23 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Container, Row, Button } from 'reactstrap';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
 import logo from '../../assets/images/logo.png';
 import "./Header.css";
+import { AuthContext } from '../../context/AuthContext';
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
+  const { user, dispatch } = useContext(AuthContext)
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    setIsLoggedIn(!!token);
-  }, []);
+  const logout = () => {
+    dispatch({ type: 'LOGOUT' })
+    navigate('/')
+  }
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    setIsLoggedIn(false);
-    navigate('/login');
-  };
 
   const nav_links = [
     { path: '/home', display: 'Home' },
@@ -71,8 +68,13 @@ const Header = () => {
             {/* --------- Right Side Buttons --------- */}
             <div className="nav_right d-flex align-items-center gap-4">
               <div className="nav_btns d-flex align-items-center gap-4">
-                {!isLoggedIn ? (
-                  <>
+
+                {
+                  user ? (<>
+                    <h5 className="mb-0">{user.username}</h5>
+                    <Button className="btn btn-dark" onClick={logout}>Logout</Button>
+                  </> 
+                  ):( <>
                     <Button className="btn secondary_btn">
                       <Link to="/login" style={{ textDecoration: 'none', color: 'inherit' }}>Login</Link>
                     </Button>
@@ -80,11 +82,11 @@ const Header = () => {
                       <Link to="/register" style={{ textDecoration: 'none', color: 'inherit' }}>Register</Link>
                     </Button>
                   </>
-                ) : (
-                  <Button className="btn danger_btn" onClick={handleLogout}>
-                    Logout
-                  </Button>
-                )}
+                  )
+                }
+
+
+
               </div>
 
               <span className="mobile_menu">

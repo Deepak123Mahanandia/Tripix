@@ -1,37 +1,41 @@
-.service_item
-{
-    padding:1rem;
-    border-bottom: 1px solid #649e95;
-    border-right:1px solid #649e95;
-    border-radius: 0.5rem;
+.service__item {
+  padding: 1rem;
+  border-bottom: 1px solid #faa83586;
+  border-right: 1px solid #faa83586;
+  border-radius: 0.5rem;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.service_img
-{
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50px;
-    background: var(--secondary-color);
-    padding:0.5rem;
-    margin-bottom:1rem;
-    line-height: 50px;
+.service__item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-.service_img img
-{
-    width:100%;
+.service__icon {
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  margin-bottom: 1rem;
+  background: var(--secondary-color); /* Uses your theme's color variable */
+  border-radius: 50%;
 }
 
-.service_item h5
-{
-    font-size: 1.1rem;
-    font-weight: 500;
+.service__icon svg {
+  font-size: 2.2rem;
+  color: #fff;
 }
 
-.service_item p{
-    font-size:.9rem;
-    color:var(--text-color);
+.service__item h5 {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.service__item p {
+  font-size: 0.9rem;
+  color: var(--text-color);
+  line-height: 1.5;
 }

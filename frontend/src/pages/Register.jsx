@@ -1,32 +1,44 @@
-import React, { useState } from 'react';
-import '../styles/login.css'; // Reusing the same styles for consistency
+// Register.jsx (updated)
+import React, { useState, useContext } from 'react';
+import '../styles/login.css';
 import { Container, Form, FormGroup, Button } from 'reactstrap';
-import { Link } from 'react-router-dom';
-
-
-// Assuming you want a user icon here as well, or replace with registerimg if available
+import { Link, useNavigate } from 'react-router-dom';
 import userIcon from '../assets/images/user.png';
-
+import { AuthContext } from './../context/AuthContext';
+import { BASE_URL } from './../utils/config';
 
 const Register = () => {
   const [credentials, setCredentials] = useState({
-    userName: undefined,
-    email: undefined,
-    password: undefined,
+    username: '',
+    email: '',
+    password: '',
   });
 
+  const { dispatch } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-  const handleChange = e => {
-    setCredentials(prev => ({ ...prev, [e.target.id]: e.target.value }));
+  const handleChange = (e) => {
+    setCredentials(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-
-  const handleClick = e => {
+  const handleClick = async (e) => {
     e.preventDefault();
-    // Your registration logic will go here
-    console.log(credentials);
-  };
+    try {
+      const res = await fetch(`${BASE_URL}/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(credentials),
+      });
 
+      const result = await res.json();
+      if (!res.ok) return alert(result.message || 'Failed to register user');
+
+      dispatch({ type: 'REGISTER_SUCCESS' });
+      navigate('/login');
+    } catch (err) {
+      alert(err.message);
+    }
+  };
 
   return (
     <section className="login__page">
@@ -36,36 +48,37 @@ const Register = () => {
             <img src={userIcon} alt="User Icon" />
           </div>
 
-
           <h2>Create Account</h2>
           <p className="login__subtitle">Sign up to start your adventure</p>
-
 
           <Form onSubmit={handleClick}>
             <FormGroup>
               <input
                 type="text"
+                name="username"
                 placeholder="Username"
                 required
-                id="userName"
+                value={credentials.username}
                 onChange={handleChange}
               />
             </FormGroup>
             <FormGroup>
               <input
                 type="email"
+                name="email"
                 placeholder="Email Address"
                 required
-                id="email"
+                value={credentials.email}
                 onChange={handleChange}
               />
             </FormGroup>
             <FormGroup>
               <input
                 type="password"
+                name="password"
                 placeholder="Password"
                 required
-                id="password"
+                value={credentials.password}
                 onChange={handleChange}
               />
             </FormGroup>
@@ -73,7 +86,6 @@ const Register = () => {
               Create Account
             </Button>
           </Form>
-
 
           <p className="login__register-link">
             Already have an account? <Link to="/login">Login</Link>
@@ -83,6 +95,5 @@ const Register = () => {
     </section>
   );
 };
-
 
 export default Register;

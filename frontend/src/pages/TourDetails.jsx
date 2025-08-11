@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
 import '../styles/tour-details.css';
 import { Container, Row, Col, Form, ListGroup } from 'reactstrap';
 import { useParams } from 'react-router-dom';
@@ -6,20 +6,28 @@ import calculateAvgRating from '../utils/avgRating';
 import avatar from "../assets/images/avatar.jpg";
 import Booking from '../components/Booking/Booking';
 import Newsletter from '../shared/Newsletter';
-import useFetch from './../hooks/useFetch'; // Make sure to import useFetch
-import { BASE_URL } from './../utils/config'; // It's good practice to have a base URL config
+import useFetch from './../hooks/useFetch';
+import { BASE_URL } from './../utils/config';
+import { AuthContext } from '../context/AuthContext';
 
 const TourDetails = () => {
   const { id } = useParams();
   const reviewMsgRef = useRef('');
   const [tourRating, setTourRating] = useState(null);
 
-  // Fetch data for the specific tour using the useFetch hook
+  // Fetch tour data
   const { data: tour, loading, error } = useFetch(`${BASE_URL}/tours/${id}`);
+  // Get user from context
+  const { user } = useContext(AuthContext);
 
-  // ========== Conditional Loading and Error Handling ==========
-  // This is the most important part to prevent the "undefined" error.
-  
+  // Scroll to top when tour data loads
+  useEffect(() => {
+    if (tour) {
+      window.scrollTo(0, 0);
+    }
+  }, [tour]);
+
+  // Loading state
   if (loading) {
     return (
       <Container>
@@ -32,6 +40,7 @@ const TourDetails = () => {
     );
   }
 
+  // Error state
   if (error) {
     return (
       <Container>
@@ -44,17 +53,67 @@ const TourDetails = () => {
     );
   }
 
-  // Once loading is false and there's no error, we can proceed
+  // Destructure tour properties after data is loaded
   const { photo, title, desc, price, address, reviews, city, distance, maxGroupSize } = tour;
   const { totalRating, avgRating } = calculateAvgRating(reviews);
   const options = { day: 'numeric', month: 'long', year: 'numeric' };
 
-  const submitHandler = e => {
+  // =========== UPDATED SUBMIT HANDLER ============
+  const submitHandler = async e => {
     e.preventDefault();
     const reviewText = reviewMsgRef.current.value;
-    alert(`${reviewText}, ${tourRating}`);
-    // You will call your review submission API here
+
+    // Add a check for rating to ensure it's selected
+    if (!tourRating) {
+      return alert('Please select a rating before submitting.');
+    }
+
+    try {
+      // Make the user check more robust
+      if (!user || user === undefined || user === null) {
+        return alert('You must be signed in to post a review.');
+      }
+
+      // This is the main fix: Include userId and tourId in the payload
+      // In TourDetails.jsx -> submitHandler()
+
+      const reviewObj = {
+        username: user.username, // Confirmed: this will work
+        userId: user._id,       // Confirmed: this will work
+        tourId: id,
+        reviewText,
+        rating: tourRating,
+      };
+
+      console.log('1. DATA SENT FROM FRONTEND:', reviewObj);
+      
+      const res = await fetch(`${BASE_URL}/reviews/${id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        // Note: 'credentials' is for cookie-based sessions. If you use JWT,
+        // you might need an 'Authorization' header instead.
+        credentials: 'include',
+        body: JSON.stringify(reviewObj),
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        return alert(result.message);
+      }
+
+      // On success, reloading the page is a simple way to see the new review
+      alert(result.message);
+      window.location.reload();
+
+    } catch (err) {
+      alert('An error occurred while submitting your review. Please try again.');
+      console.error(err);
+    }
   };
+  // ===============================================
 
   return (
     <>
@@ -64,7 +123,6 @@ const TourDetails = () => {
             <Col lg='8'>
               <div className="tour_content">
                 <img src={photo} alt="" />
-
                 <div className="tour_info">
                   <h2>{title}</h2>
                   <div className="d-flex align-items-center gap-5">
@@ -77,7 +135,6 @@ const TourDetails = () => {
                       <i className="ri-map-pin-fill"></i> {address}
                     </span>
                   </div>
-
                   <div className="tour_extra-details">
                     <span><i className="ri-map-pin-2-line"></i> {city} </span>
                     <span><i className="ri-money-rupee-circle-line"></i> ₹{price} /per person</span>
@@ -88,14 +145,14 @@ const TourDetails = () => {
                   <p>{desc}</p>
                 </div>
 
-                {/* ====== Tour Review Section ====== */}
+                {/* Tour Review Section */}
                 <div className="tour_reviews mt-4">
                   <h4>Reviews ({reviews?.length} reviews)</h4>
                   <Form onSubmit={submitHandler}>
                     <div className='d-flex align-items-center gap-3 mb-4 rating_group'>
                       {[1, 2, 3, 4, 5].map(num => (
                         <span key={num} onClick={() => setTourRating(num)}>
-                          {num} <i className="ri-star-s-fill"></i>
+                          <i className={tourRating >= num ? "ri-star-s-fill active__star" : "ri-star-s-fill"}></i>
                         </span>
                       ))}
                     </div>
@@ -106,7 +163,7 @@ const TourDetails = () => {
                       </button>
                     </div>
                   </Form>
-                  
+
                   <ListGroup className='user_reviews'>
                     {reviews?.map((review, index) => (
                       <div className="review_item" key={index}>

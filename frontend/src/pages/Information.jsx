@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Modal, Button } from 'react-bootstrap';
-import featuredPlaces from '../assets/data/featuredPlaces'; 
+import { Modal, Button, Accordion } from 'react-bootstrap'; // Import Accordion
+import { FaMapMarkerAlt, FaCalendarAlt, FaUtensils, FaCheckCircle } from 'react-icons/fa'; // Import icons
+import featuredPlaces from '../assets/data/featuredPlaces';
 import '../styles/Information.css';
-
 
 const Information = () => {
   const [selectedPlace, setSelectedPlace] = useState(null);
@@ -26,11 +26,15 @@ const Information = () => {
           <div className="col-md-4 mb-4" key={place.id}>
             <div className="card shadow-sm h-100">
               <img src={place.photo} className="card-img-top" alt={place.title} style={{ height: '220px', objectFit: 'cover' }} />
-              <div className="card-body">
+              <div className="card-body d-flex flex-column">
                 <h5 className="card-title">{place.title}</h5>
-                <p className="card-text"><strong>City:</strong> {place.city}</p>
-                <p className="card-text"><strong>Best Season:</strong> {place.bestSeason}</p>
-                <Button style={{ backgroundColor: '#6bd0c1', borderColor: '#6bd0c1' }} onClick={() => handleViewDetails(place)}>
+                <p className="card-text"><FaMapMarkerAlt /> <strong>City:</strong> {place.city}</p>
+                <p className="card-text"><FaCalendarAlt /> <strong>Best Season:</strong> {place.bestSeason}</p>
+                <Button 
+                  className="mt-auto"
+                  style={{ backgroundColor: '#6bd0c1', borderColor: '#6bd0c1' }} 
+                  onClick={() => handleViewDetails(place)}
+                >
                   View Details
                 </Button>
               </div>
@@ -40,25 +44,45 @@ const Information = () => {
       </div>
 
       {selectedPlace && (
-        <Modal show={showModal} onHide={handleCloseModal} size="lg">
+        <Modal show={showModal} onHide={handleCloseModal} size="lg" centered>
           <Modal.Header closeButton style={{ backgroundColor: '#6bd0c1', color: 'white' }}>
             <Modal.Title>{selectedPlace.title}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <img src={selectedPlace.photo} alt={selectedPlace.title} className="img-fluid mb-3" style={{ borderRadius: '5px' }} />
-            <p><strong>City:</strong> {selectedPlace.city}</p>
-            <p><strong>Best Season:</strong> {selectedPlace.bestSeason}</p>
-            <p><strong>Description:</strong> {selectedPlace.description}</p>
-            <p><strong>Famous For:</strong> {selectedPlace.famousFor}</p>
-            <p><strong>Must Try Foods:</strong> {selectedPlace.mustTryFoods.join(', ')}</p>
-            <p><strong>Distances:</strong></p>
-            <ul>
-              <li><strong>Railway Station:</strong> {selectedPlace.distanceFromRailwayStation}</li>
-              <li><strong>Airport:</strong> {selectedPlace.distanceFromAirport}</li>
-              <li><strong>Bus Station:</strong> {selectedPlace.distanceFromBusStation}</li>
-            </ul>
-            <p><strong>Must Visit Nearby Places:</strong> {selectedPlace.mustVisitNearbyPlaces.join(', ')}</p>
-            <p><strong>Must Do Activities:</strong> {selectedPlace.mustDoActivities.join(', ')}</p>
+            <img src={selectedPlace.photo} alt={selectedPlace.title} className="img-fluid mb-3 rounded-3" />
+            
+            <div className="details-section">
+                <p><strong>Description:</strong> {selectedPlace.description}</p>
+                <p><strong>Famous For:</strong> {selectedPlace.famousFor}</p>
+                <p><FaUtensils /> <strong>Must Try Foods:</strong> {selectedPlace.mustTryFoods.join(', ')}</p>
+                <p><strong>Must Do Activities:</strong> {selectedPlace.mustDoActivities.join(', ')}</p>
+            </div>
+
+            {/* --- NEW ITINERARY ACCORDION --- */}
+            <div className="itinerary-section mt-4">
+                <h4 className="itinerary-title">5-Day Itinerary</h4>
+                <Accordion defaultActiveKey="0" flush>
+                  {selectedPlace.itinerary.map((dayPlan, index) => (
+                    <Accordion.Item eventKey={index.toString()} key={index}>
+                      <Accordion.Header>
+                        <strong>Day {dayPlan.day}:</strong> &nbsp;{dayPlan.title}
+                      </Accordion.Header>
+                      <Accordion.Body>
+                        <ul className="activity-list">
+                          {dayPlan.activities.map((activity, i) => (
+                            <li key={i}>
+                              <FaCheckCircle className="activity-icon" />
+                              <span>{activity}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </Accordion.Body>
+                    </Accordion.Item>
+                  ))}
+                </Accordion>
+            </div>
+            {/* --- END OF ITINERARY ACCORDION --- */}
+
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleCloseModal}>
