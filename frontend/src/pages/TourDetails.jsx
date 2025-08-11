@@ -14,106 +14,85 @@ const TourDetails = () => {
   const { id } = useParams();
   const reviewMsgRef = useRef('');
   const [tourRating, setTourRating] = useState(null);
-
-  // Fetch tour data
   const { data: tour, loading, error } = useFetch(`${BASE_URL}/tours/${id}`);
-  // Get user from context
   const { user } = useContext(AuthContext);
 
-  // Scroll to top when tour data loads
   useEffect(() => {
     if (tour) {
       window.scrollTo(0, 0);
     }
   }, [tour]);
 
-  // Loading state
   if (loading) {
     return (
       <Container>
-        <Row>
-          <Col className='text-center pt-5'>
-            <h4>Loading...</h4>
-          </Col>
-        </Row>
+        <Row><Col className='text-center pt-5'><h4>Loading...</h4></Col></Row>
       </Container>
     );
   }
 
-  // Error state
   if (error) {
     return (
       <Container>
-        <Row>
-          <Col className='text-center pt-5'>
-            <h4>{error}</h4>
-          </Col>
-        </Row>
+        <Row><Col className='text-center pt-5'><h4>{error}</h4></Col></Row>
       </Container>
     );
   }
 
-  // Destructure tour properties after data is loaded
   const { photo, title, desc, price, address, reviews, city, distance, maxGroupSize } = tour;
   const { totalRating, avgRating } = calculateAvgRating(reviews);
   const options = { day: 'numeric', month: 'long', year: 'numeric' };
 
-  // =========== UPDATED SUBMIT HANDLER ============
   const submitHandler = async e => {
     e.preventDefault();
     const reviewText = reviewMsgRef.current.value;
 
-    // Add a check for rating to ensure it's selected
-    if (!tourRating) {
-      return alert('Please select a rating before submitting.');
-    }
-
     try {
-      // Make the user check more robust
+      // --- DEBUG LINES ADDED ---
+      console.log('User object at time of submission:', user);
+      // -------------------------
+
       if (!user || user === undefined || user === null) {
         return alert('You must be signed in to post a review.');
       }
-
-      // This is the main fix: Include userId and tourId in the payload
-      // In TourDetails.jsx -> submitHandler()
-
+      
       const reviewObj = {
-        username: user.username, // Confirmed: this will work
-        userId: user._id,       // Confirmed: this will work
+        username: user.username,
+        userId: user._id,
         tourId: id,
         reviewText,
         rating: tourRating,
       };
 
-      console.log('1. DATA SENT FROM FRONTEND:', reviewObj);
-      
+      const headers = {
+          'Content-Type': 'application/json'
+      };
+      if (user?.token) {
+          headers['Authorization'] = `Bearer ${user.token}`;
+      }
+
+      // --- DEBUG LINES ADDED ---
+      console.log('Final headers being sent:', headers);
+      // -------------------------
+
       const res = await fetch(`${BASE_URL}/reviews/${id}`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        // Note: 'credentials' is for cookie-based sessions. If you use JWT,
-        // you might need an 'Authorization' header instead.
-        credentials: 'include',
+        headers: headers,
         body: JSON.stringify(reviewObj),
       });
 
       const result = await res.json();
-
       if (!res.ok) {
         return alert(result.message);
       }
 
-      // On success, reloading the page is a simple way to see the new review
       alert(result.message);
       window.location.reload();
 
     } catch (err) {
-      alert('An error occurred while submitting your review. Please try again.');
-      console.error(err);
+      alert('An error occurred. Please try again.');
     }
   };
-  // ===============================================
 
   return (
     <>
@@ -131,9 +110,7 @@ const TourDetails = () => {
                       {avgRating === 0 ? null : avgRating}
                       {totalRating === 0 ? ('Not rated') : (<span>({reviews?.length})</span>)}
                     </span>
-                    <span>
-                      <i className="ri-map-pin-fill"></i> {address}
-                    </span>
+                    <span><i className="ri-map-pin-fill"></i> {address}</span>
                   </div>
                   <div className="tour_extra-details">
                     <span><i className="ri-map-pin-2-line"></i> {city} </span>
@@ -145,7 +122,6 @@ const TourDetails = () => {
                   <p>{desc}</p>
                 </div>
 
-                {/* Tour Review Section */}
                 <div className="tour_reviews mt-4">
                   <h4>Reviews ({reviews?.length} reviews)</h4>
                   <Form onSubmit={submitHandler}>
@@ -158,12 +134,9 @@ const TourDetails = () => {
                     </div>
                     <div className="review_input">
                       <input type="text" ref={reviewMsgRef} placeholder='Share your thoughts' required />
-                      <button className="btn primary_btn text-white" type='submit'>
-                        Submit
-                      </button>
+                      <button className="btn primary_btn text-white" type='submit'>Submit</button>
                     </div>
                   </Form>
-
                   <ListGroup className='user_reviews'>
                     {reviews?.map((review, index) => (
                       <div className="review_item" key={index}>
@@ -174,9 +147,7 @@ const TourDetails = () => {
                               <h5>{review.username}</h5>
                               <p>{new Date(review.createdAt).toLocaleDateString("en-US", options)}</p>
                             </div>
-                            <span className='d-flex align-items-center'>
-                              {review.rating} <i className="ri-star-s-fill"></i>
-                            </span>
+                            <span className='d-flex align-items-center'>{review.rating} <i className="ri-star-s-fill"></i></span>
                           </div>
                           <h6>{review.reviewText}</h6>
                         </div>

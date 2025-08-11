@@ -1,9 +1,7 @@
 import React, { useState, useContext } from 'react';
-import '../styles/login.css'; // We will update this file next
+import '../styles/login.css';
 import { Container, Form, FormGroup, Button } from 'reactstrap';
 import { Link, useNavigate } from 'react-router-dom';
-
-// Use the user icon you uploaded
 import userIcon from '../assets/images/user.png';
 import { AuthContext } from './../context/AuthContext';
 import { BASE_URL } from './../utils/config';
@@ -23,31 +21,37 @@ const Login = () => {
 
   const handleClick = async e => {
     e.preventDefault();
-
     dispatch({ type: 'LOGIN_START' });
+
     try {
       const res = await fetch(`${BASE_URL}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        credentials: 'include', // important for cookie auth
         body: JSON.stringify(credentials),
       });
 
       const result = await res.json();
+
       if (!res.ok) {
-        alert(result.message);
         dispatch({ type: 'LOGIN_FAILURE', payload: result.message });
-        return;
+        return alert(result.message);
       }
 
-      console.log(result.data);
-
-      // No localStorage.setItem here because token is in cookie
-
-      dispatch({ type: 'LOGIN_SUCCESS', payload: result.data });
+      // --- THIS IS THE FINAL FIX ---
+      // Combine the token and user data from the response into one object
+      const userPayload = {
+        ...result.data, // User data like _id, username, email
+        token: result.token // Add the token property to the user object
+      };
+      
+      // Dispatch the complete payload to the context
+      dispatch({ type: 'LOGIN_SUCCESS', payload: userPayload });
+      
       navigate('/');
+
     } catch (err) {
       dispatch({ type: 'LOGIN_FAILURE', payload: err.message });
+      alert(err.message);
     }
   };
 
