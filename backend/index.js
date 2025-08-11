@@ -9,6 +9,8 @@ import tourRoute from './routes/tours.js';
 import userRoute from './routes/users.js';
 import reviewRoute from './routes/reviews.js';
 import bookingRoute from './routes/booking.js';
+import paymentRoute from './routes/payment.js'; // 1. Import the new payment route
+
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -21,6 +23,11 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
+// --- MIDDLEWARE ---
+// IMPORTANT: The raw body parser for Stripe webhooks must come BEFORE express.json()
+// We define the webhook route here separately from the others.
+app.use('/api/v1/payment/webhook', express.raw({ type: 'application/json' }), paymentRoute);
+
 // Middleware
 app.use(express.json());
 app.use(cors(corsOptions)); // Use the updated options
@@ -32,6 +39,7 @@ app.use('/api/v1/tours', tourRoute);
 app.use('/api/v1/users', userRoute);
 app.use('/api/v1/reviews', reviewRoute);
 app.use('/api/v1/booking', bookingRoute);
+app.use('/api/v1/payment', paymentRoute); 
 
 // Test route
 app.get('/', (req, res) => {

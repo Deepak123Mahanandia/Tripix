@@ -27,45 +27,50 @@ const Booking = ({ tour, avgRating }) => {
     const servicefee = 5500;
     const totalAmount = Number(price) * Number(booking.guestSize) + Number(servicefee);
 
+    // =========== THIS IS THE CORRECTED FUNCTION FOR STRIPE ===========
     const handleClick = async e => {
         e.preventDefault();
-        try {
-            // --- DEBUG LINES ADDED ---
-            console.log('User object at time of submission:', user);
-            // -------------------------
 
+        try {
             if (!user || user === undefined || user === null) {
                 return alert('Please sign in to book.');
             }
 
             const headers = {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
             };
-            if (user?.token) {
-                headers['Authorization'] = `Bearer ${user.token}`;
-            }
+            
+            // This is the data we'll send to the backend to create the Stripe session
+            const stripeBookingData = {
+                tourName: title,
+                price: price,
+                guestSize: booking.guestSize,
+            };
 
-            // --- DEBUG LINES ADDED ---
-            console.log('Final headers being sent:', headers);
-            // -------------------------
-
-            const res = await fetch(`${BASE_URL}/booking`, {
+            // Call your new backend endpoint to create the payment session
+            const res = await fetch(`${BASE_URL}/payment/create-checkout-session`, {
                 method: 'post',
                 headers: headers,
-                body: JSON.stringify(booking)
+                body: JSON.stringify(stripeBookingData)
             });
 
             const result = await res.json();
+
             if (!res.ok) {
                 return alert(result.message);
             }
 
-            navigate("/thank-you");
+            // Redirect the user to the Stripe Checkout page URL sent from the backend
+            if (result.url) {
+                window.location.href = result.url;
+            }
 
         } catch (err) {
             alert(err.message);
         }
     };
+    // ===============================================================
 
     return (
         <div className="booking">
