@@ -135,3 +135,25 @@
 {
     font-weight:500;
 }
+
+/* Add this to your tour-details.css file */
+
+.rating_group span {
+  cursor: pointer;
+}
+
+.rating_group i {
+  font-size: 1.8rem;
+  color: #ccc; /* Default color for unselected stars */
+  transition: all 0.2s ease-in-out;
+}
+
+.rating_group i:hover {
+  transform: scale(1.2); /* Grow slightly on hover */
+  color: #f5b10a; /* Highlight color on hover */
+}
+
+.rating_group .active__star {
+  color: var(--secondary-color); /* Bright color for selected stars */
+  transform: scale(1.1);
+}

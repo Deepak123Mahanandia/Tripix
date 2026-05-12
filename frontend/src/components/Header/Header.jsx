@@ -21,7 +21,7 @@ const Header = () => {
     { path: '/about', display: 'About' },
     { path: '/tour', display: 'Tours' },
     { path: '/trip-planner', display: 'Search and Compare' }, // <-- LINK ADDED HERE
-    { path: '/information', display: 'Information' },
+    { path: '/information', display: 'Package' },
     { path: '/support', display: 'Support' },
     // Itinerary planner shown only if logged in (below)
   ];

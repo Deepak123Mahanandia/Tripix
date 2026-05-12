@@ -24,58 +24,47 @@ const Booking = ({ tour, avgRating }) => {
         setBooking(prev => ({ ...prev, [e.target.id]: e.target.value }))
     };
 
-    const servicefee = 5500;
-    const totalAmount = Number(price) * Number(booking.guestSize) + Number(servicefee);
+    const SERVICE_FEE = 1500;
+    const GST_RATE = 0.18;
+    const subtotal = Number(price) * Number(booking.guestSize);
+    const gstAmount = subtotal * GST_RATE;
+    const totalAmount = subtotal + SERVICE_FEE + gstAmount;
 
-    // =========== THIS IS THE CORRECTED FUNCTION FOR STRIPE ===========
     const handleClick = async e => {
         e.preventDefault();
-
         try {
-            if (!user || user === undefined || user === null) {
+            if (!user) {
                 return alert('Please sign in to book.');
             }
 
-            const headers = {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${user.token}`
-            };
-            
-            // This is the data we'll send to the backend to create the Stripe session
             const stripeBookingData = {
                 tourName: title,
                 price: price,
                 guestSize: booking.guestSize,
             };
 
-            // Call your new backend endpoint to create the payment session
             const res = await fetch(`${BASE_URL}/payment/create-checkout-session`, {
                 method: 'post',
-                headers: headers,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${user.token}`
+                },
                 body: JSON.stringify(stripeBookingData)
             });
 
             const result = await res.json();
-
-            if (!res.ok) {
-                return alert(result.message);
-            }
-
-            // Redirect the user to the Stripe Checkout page URL sent from the backend
-            if (result.url) {
-                window.location.href = result.url;
-            }
+            if (!res.ok) return alert(result.message);
+            if (result.url) window.location.href = result.url;
 
         } catch (err) {
             alert(err.message);
         }
     };
-    // ===============================================================
 
     return (
         <div className="booking">
             <div className="booking_top d-flex align-items-center justify-content-center ">
-                <h3>₹{price}<span>Per person</span></h3>
+                <h3>₹{price}<span>/per person</span></h3>
                 <span className='tour_rating d-flex align-items-center '>
                     <i className="ri-star-fill"></i>
                     {avgRating === 0 ? null : avgRating} ({reviews?.length})
@@ -84,7 +73,8 @@ const Booking = ({ tour, avgRating }) => {
 
             <div className="booking_form">
                 <h5>Information</h5>
-                <Form className='booking_info-form' onSubmit={handleClick}>
+                {/* --- CHANGE 1: Added an id to the form --- */}
+                <Form className='booking_info-form' id="booking-form" onSubmit={handleClick}>
                     <FormGroup>
                         <input type="text" placeholder='Full Name' id="fullName" required
                             onChange={handleChange} />
@@ -96,7 +86,7 @@ const Booking = ({ tour, avgRating }) => {
                     <FormGroup className='d-flex align-items-center gap-3'>
                         <input type="date" placeholder='' id="bookAt" required
                             onChange={handleChange} />
-                        <input type="number" placeholder='Guest' id="guestSize" required
+                        <input type="number" placeholder='Guest' id="guestSize" required min="1"
                             onChange={handleChange} />
                     </FormGroup>
                 </Form>
@@ -106,18 +96,26 @@ const Booking = ({ tour, avgRating }) => {
                 <ListGroup>
                     <ListGroupItem className='border-0 px-0'>
                         <h5 className='d-flex align-items-center gap-1'>₹{price} <i className="ri-close-line"></i> {booking.guestSize} person(s)</h5>
-                        <span>₹{Number(price) * Number(booking.guestSize)}</span>
+                        <span>₹{subtotal.toLocaleString()}</span>
                     </ListGroupItem>
                     <ListGroupItem className='border-0 px-0'>
-                        <h5>Service charge</h5>
-                        <span>₹{servicefee}</span>
+                        <h5>Service fee</h5>
+                        <span>₹{SERVICE_FEE.toLocaleString()}</span>
+                    </ListGroupItem>
+                    <ListGroupItem className='border-0 px-0'>
+                        <h5>GST (18%)</h5>
+                        <span>₹{gstAmount.toLocaleString()}</span>
                     </ListGroupItem>
                     <ListGroupItem className='border-0 px-0 total'>
                         <h5>Total</h5>
-                        <span>₹{totalAmount}</span>
+                        <span>₹{totalAmount.toLocaleString()}</span>
                     </ListGroupItem>
                 </ListGroup>
-                <Button className="btn primary_btn w-100 mt-4" onClick={handleClick}>Book Now</Button>
+                
+                {/* --- CHANGE 2: Updated the button to submit the form --- */}
+                <Button className="btn primary_btn w-100 mt-4" type="submit" form="booking-form">
+                    Book Now
+                </Button>
             </div>
         </div>
     );

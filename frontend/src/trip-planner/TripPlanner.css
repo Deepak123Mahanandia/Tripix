@@ -188,3 +188,93 @@
   outline: none;
   box-shadow: 0 0 0 4px rgba(107, 208, 193, 0.5);
 }
+
+/* Add this to TripPlanner.css */
+.custom-itinerary-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.my-plan-column h4, .optional-activities-column h4 {
+    margin-bottom: 1rem;
+    color: var(--heading-color);
+}
+
+.plan-day-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.plan-day-card h5 {
+    font-size: 1.1rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.activity-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.activity-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    font-size: 0.95rem;
+}
+
+.remove-btn {
+    background: none;
+    border: none;
+    color: #ff6f61;
+    cursor: pointer;
+    font-size: 1.1rem;
+}
+
+.optional-activities-column .activity-option-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.activity-option-card h6 {
+    font-weight: 600;
+}
+
+.activity-option-card p {
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 0.75rem;
+}
+
+.add-to-day-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+}
+
+.add-to-day-buttons button {
+    background: #e9ecef;
+    border: none;
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.add-to-day-buttons button:hover {
+    background: var(--secondary-color);
+    color: #fff;
+}
