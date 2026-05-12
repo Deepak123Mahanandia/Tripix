@@ -1,6 +1,6 @@
 import Booking from '../models/Booking.js'; // ✅ Fixed import
 
-// ✅ Create new booking
+
 export const createBooking = async (req, res) => {
   const newBooking = new Booking(req.body);
   try {
@@ -11,14 +11,14 @@ export const createBooking = async (req, res) => {
       data: savedBooking
     });
   } catch (err) {
-    res.status(500).json({  // ✅ Use 500 for internal error
+    res.status(500).json({  
       success: true,
       message: 'Internal server error'
     });
   }
 }; 
 
- // get single booking
+
 export const getBookings = async (req, res) => {
     const id = req.params.id; // ✅ Use id from params if needed
   try {
@@ -36,7 +36,7 @@ export const getBookings = async (req, res) => {
   }
 };
 
-// get all single bookings
+
 export const getAllBookings = async (req, res) => {
   try {
     const book = await Booking.find();

@@ -1,11 +1,9 @@
 import Stripe from 'stripe';
 
-// Initialize Stripe with your secret key from the .env file
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-/**
- * Creates a Stripe Checkout Session for tour bookings.
- */
+
 export const createCheckoutSession = async (req, res) => {
     const { tourName, price, guestSize } = req.body;
     const totalAmount = price * guestSize;
@@ -38,11 +36,9 @@ export const createCheckoutSession = async (req, res) => {
     }
 };
 
-/**
- * Handles incoming webhook events from Stripe for tour bookings.
- */
+
 export const handleStripeWebhook = async (req, res) => {
-    // This existing function also remains completely unchanged.
+   
     const sig = req.headers['stripe-signature'];
     const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
     let event;
@@ -65,7 +61,7 @@ export const handleStripeWebhook = async (req, res) => {
 
 export const createTripPayment = async (req, res) => {
     try {
-        // --- CHANGE 1: We now also get the user's email from the request body ---
+       
         const { totalAmount, flight, hotel, userEmail } = req.body;
 
         if (!totalAmount || !flight || !hotel || !userEmail) {
@@ -76,7 +72,7 @@ export const createTripPayment = async (req, res) => {
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             mode: 'payment',
-            // --- CHANGE 2: Pre-fill the customer's email on the Stripe page ---
+            
             customer_email: userEmail,
             line_items: [
                 {

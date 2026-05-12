@@ -5,7 +5,7 @@ import { verifyToken } from "../utils/verifyToken.js";
 
 const router = express.Router();
 
-// POST /api/review/:tourId
+
 router.post("/:tourId", verifyToken, createReview);
 
 

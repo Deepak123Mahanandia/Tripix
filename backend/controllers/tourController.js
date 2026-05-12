@@ -1,6 +1,6 @@
 import Tour from '../models/Tour.js';
 
-// Create a new tour
+
 export const createTour = async (req, res) => {
   const newTour = new Tour(req.body);
   try {
@@ -16,10 +16,10 @@ export const createTour = async (req, res) => {
       message: 'Failed to create. Try again later.'
     });
   }
-}; // ✅ Added closing brace here
+}; 
   
 
-// update tour
+
 export const updateTour = async (req, res) => {
   const id = req.params.id;
   try {
@@ -38,7 +38,7 @@ export const updateTour = async (req, res) => {
     });
   }  
 };
-// delete tour
+
 export const deleteTour = async (req, res) => {
   const id = req.params.id;
   try {
@@ -54,7 +54,7 @@ export const deleteTour = async (req, res) => {
     });
   }
 };
-// getsingle tour
+
 export const getSingleTour = async (req, res) => {
   const id = req.params.id;
   try {
@@ -71,7 +71,7 @@ export const getSingleTour = async (req, res) => {
     });
   }  
 };
-// getAll tour
+
 export const getAllTour = async (req, res) => {
   const page = parseInt(req.query.page);
 
@@ -95,7 +95,7 @@ export const getAllTour = async (req, res) => {
   }  
 };
 
-// Get tour by search (only city and maxGroupSize)
+
 export const getTourBySearch = async (req, res) => {
   const city = new RegExp(req.query.city, 'i'); // case-insensitive city match
   const maxGroupSize = parseInt(req.query.maxGroupSize);
@@ -120,7 +120,7 @@ export const getTourBySearch = async (req, res) => {
 };
 
 
-// get featured tours
+
 export const getFeaturedTours = async (req, res) => {
   try {
     const tours = await Tour.find({ featured: true }).populate('reviews');
@@ -138,7 +138,6 @@ export const getFeaturedTours = async (req, res) => {
 };
 
 
-//get tour counts
 export const getTourCounts = async (req, res) => {
   try {
     const tourcount = await Tour.estimatedDocumentCount();

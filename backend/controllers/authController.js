@@ -2,7 +2,7 @@ import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-// REGISTER
+
 export const register = async (req, res) => {
   try {
     const salt = bcrypt.genSaltSync(10);
@@ -20,7 +20,7 @@ export const register = async (req, res) => {
   }
 };
 
-// =================== CORRECTED LOGIN FUNCTION ===================
+
 export const login = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
@@ -33,24 +33,24 @@ export const login = async (req, res) => {
       return res.status(401).json({ success: false, message: "Invalid credentials" });
     }
 
-    // Create the token
+    
     const token = jwt.sign(
       { id: user._id, role: user.role },
       process.env.JWT_SECRET_KEY,
       { expiresIn: "5d" }
     );
 
-    // Separate password from the rest of the user data for security
+   
     const { password, role, ...rest } = user._doc;
 
-    // Send the token AND user data back to the frontend
+    
     res
       .status(200)
       .json({
         success: true,
         message: "Login successful",
-        token, // The generated token
-        data: { ...rest, role }, // User data without the password
+        token, 
+        data: { ...rest, role }, 
       });
 
   } catch (err) {

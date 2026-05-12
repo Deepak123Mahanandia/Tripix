@@ -1,6 +1,6 @@
-import User from '../models/Tour.js'; // ✅ Corrected from 'user' to 'User'
+import User from '../models/Tour.js'; 
 
-// Create a new user
+
 export const createUser = async (req, res) => {
   const newUser = new User(req.body);
   try {
@@ -18,7 +18,7 @@ export const createUser = async (req, res) => {
   }
 };
 
-// Update user
+
 export const updateUser = async (req, res) => {
   const id = req.params.id;
   try {
@@ -36,7 +36,7 @@ export const updateUser = async (req, res) => {
   }
 };
 
-// Delete user
+
 export const deleteUser = async (req, res) => {
   const id = req.params.id;
   try {
@@ -53,7 +53,7 @@ export const deleteUser = async (req, res) => {
   }
 };
 
-// Get single user
+
 export const getSingleUser = async (req, res) => {
   const id = req.params.id;
   try {
@@ -71,7 +71,7 @@ export const getSingleUser = async (req, res) => {
   }
 };
 
-// Get all users
+
 export const getAllUser = async (req, res) => {
   try {
     const users = await User.find({});

@@ -1,16 +1,16 @@
-// In reviewController.js
-import Tour from '../models/Tour.js'; // Make sure Tour model is imported
-import Review from '../models/Review.js'; // Make sure Review model is imported
+
+import Tour from '../models/Tour.js'; 
+import Review from '../models/Review.js'; 
 
 export const createReview = async (req, res) => {
 
-  // 'req.body' contains everything we need.
+ 
   const newReview = new Review(req.body);
 
   try {
     const savedReview = await newReview.save();
 
-    // After saving the review, you must also update the corresponding tour's reviews array
+   
     await Tour.findByIdAndUpdate(req.body.tourId, {
       $push: { reviews: savedReview._id }
     });
