@@ -12,7 +12,7 @@ const CheckoutForm = ({ totalAmount }) => {
   const elements = useElements();
   const navigate = useNavigate();
   const { resetTrip } = useContext(TripContext);
-
+  const BASE_URL = import.meta.env.VITE_API_URL;
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!stripe || !elements) {
@@ -35,7 +35,7 @@ const CheckoutForm = ({ totalAmount }) => {
     }
 
     // --- Send payment data to your backend ---
-   const response = await fetch('http://localhost:4000/api/v1/payment/create-trip-payment', {
+   const response = await fetch(`${BASE_URL}/payment/create-trip-payment`, {
   // ...
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

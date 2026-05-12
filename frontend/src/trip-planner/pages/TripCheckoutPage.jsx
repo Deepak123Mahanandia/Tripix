@@ -8,7 +8,7 @@ import '../TripPlanner.css';
 const TripCheckoutPage = () => {
     const navigate = useNavigate();
     const { selectedFlight, selectedHotel } = useContext(TripContext);
-    
+    const BASE_URL = import.meta.env.VITE_API_URL;
     // --- NEW: State for form inputs and loading status ---
     const [isLoading, setIsLoading] = useState(false);
     const [userName, setUserName] = useState('');
@@ -28,7 +28,7 @@ const TripCheckoutPage = () => {
         setIsLoading(true);
 
         try {
-            const response = await fetch('http://localhost:4000/api/v1/payment/create-trip-payment', {
+            const response = await fetch(`${BASE_URL}/payment/create-trip-payment`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
