@@ -1,16 +1,22 @@
 import express from 'express';
-import { createCheckoutSession, handleStripeWebhook } from '../controllers/paymentController.js';
-// Corrected the typo here
+// --- Make sure to import your new controller function ---
+import { 
+  createCheckoutSession, 
+  handleStripeWebhook,
+  createTripPayment // Import the new function
+} from '../controllers/paymentController.js'; 
 import { verifyToken } from '../utils/verifyToken.js';
 
 const router = express.Router();
 
-// This route is called by your frontend to start the payment process.
-// It is protected to ensure only logged-in users can create a payment session.
+// --- This is your EXISTING route for tour bookings ---
 router.post('/create-checkout-session', verifyToken, createCheckoutSession);
 
-// This route is called by Stripe's servers to confirm a payment.
-// It should not have authentication middleware, as it needs to be publicly accessible for Stripe.
+// --- ADD THIS NEW ROUTE specifically for the Tripix flight+hotel payment ---
+// We don't need verifyToken here if any user (even not logged in) can use the Tripix planner
+router.post('/create-trip-payment', createTripPayment);
+
+// This is your existing webhook route
 router.post('/webhook', handleStripeWebhook);
 
 export default router;

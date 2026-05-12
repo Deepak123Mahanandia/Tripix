@@ -30,3 +30,6 @@ pnpm-debug.log*
 # Ignores operating system-specific files.
 .DS_Store
 Thumbs.db
+
+backend/.env
+frontend/.env
